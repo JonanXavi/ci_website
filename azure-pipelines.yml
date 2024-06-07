@@ -7,11 +7,30 @@ trigger:
 - main
 
 pool:
-  vmImage: ubuntu-latest
+  name: 'host-azure'
+  demands:
+  - npm
 
 steps:
-- task: ArchiveFiles@2
+- checkout: self
+  persistCredentials: true
+
+- checkout: git://github.com/JonanXavi/prueba_azure.git
+  persistCredentials: true
+
+#- task: NodeTool@0
+#  displayName: 'Instalar Node.js'
+#  inputs:
+#    versionSpec: '20.x'
+
+- task: Npm@1
+  displayName: 'Instalar dependencias'
   inputs:
-    rootFolderOrFile: '$(build.sourcesDirectory)'
-    includeRootFolder: false
-- task: PublishBuildArtifacts@1
+    command: 'install'
+
+- task: Npm@1
+  displayName: 'Ejecutar pruebas de regresión con Cypress'
+  inputs:
+    command: 'custom'
+    verbose: false
+    customCommand: 'run runner-in-test-env:headless'
