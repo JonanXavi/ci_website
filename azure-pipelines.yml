@@ -3,8 +3,8 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-#trigger:
-#- main
+trigger:
+- main
 
 pool:
   name: 'host-azure'
@@ -18,10 +18,10 @@ steps:
 - checkout: git://github.com/JonanXavi/prueba_azure.git
   persistCredentials: true
 
-#- task: NodeTool@0
-#  displayName: 'Instalar Node.js'
-#  inputs:
-#    versionSpec: '20.x'
+- task: NodeTool@0
+  displayName: 'Instalar Node.js'
+  inputs:
+    versionSpec: '20.x'
 
 - task: Npm@1
   displayName: 'Instalar dependencias'
